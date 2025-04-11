@@ -5,6 +5,28 @@ import User_Manager from "./modules/User-Manager"
 
 class Web_Presence {
 
+    private static instance: Web_Presence;
+
+    // * This method will create the singletone class instance.
+
+    public static connect(config: { project_id: string, project_token: string }): Web_Presence {
+
+        if (!Web_Presence.instance) Web_Presence.instance = new Web_Presence(config);
+
+        return Web_Presence.instance;
+
+    }
+
+    // * This method will return the singlestone class instance.
+
+    public static get_Connection(): Web_Presence {
+
+        if (!Web_Presence.instance) throw new Error("Web Presence Instance is not initialyzed.");
+
+        return Web_Presence.instance;
+
+    }
+
     private project_id: string;
     private project_token: string;
 
@@ -20,7 +42,9 @@ class Web_Presence {
 
     }
 
-    User = User_Manager;
+    // * Web Presence Users Methods
+
+    public User = User_Manager;
 
 }
 

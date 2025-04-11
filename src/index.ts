@@ -1,4 +1,10 @@
 
+// * Dependencies Required
+
+import { config } from "dotenv";
+
+config({ path: "./.env" });
+
 // * Modules Required
 
 import Web_Presence from "./modules/Web-Presence";
@@ -7,7 +13,7 @@ import Web_Presence from "./modules/Web-Presence";
 
 class Web_Design_Nodes {
 
-    static Web_Presence(config: { project_id: string, project_token: string }) { return new Web_Presence(config) }
+    static Web_Presence = Web_Presence;
 
 }
 

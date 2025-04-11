@@ -5,3 +5,8 @@ node_modules
 # Distribution Directory
 
 /dist
+
+# Env Files
+
+.env
+.env.production
