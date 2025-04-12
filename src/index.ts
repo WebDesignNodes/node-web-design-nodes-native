@@ -1,10 +1,4 @@
 
-// * Dependencies Required
-
-import { config } from "dotenv";
-
-config({ path: "./.env" });
-
 // * Modules Required
 
 import Web_Presence from "./modules/Web-Presence";

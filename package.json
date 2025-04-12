@@ -1,6 +1,6 @@
 {
   "name": "web-design-nodes",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "NodeJS Package to connect to the web design nodes network services.",
   "keywords": [],
   "license": "ISC",
@@ -9,6 +9,11 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:WebDesignNodes/node-web-design-nodes-native.git"
+  },
+  "homepage": "https://github.com/WebDesignNodes/node-web-design-nodes-native",
   "files": [
     "dist"
   ],
