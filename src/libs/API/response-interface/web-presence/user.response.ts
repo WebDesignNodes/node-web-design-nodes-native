@@ -1,2 +1,2 @@
 
-export interface create_Email_Password_Account_Response { account_ID: string }
+export interface create_Email_Password_Account_Response { created: boolean, account_ID: string | null, message: string }

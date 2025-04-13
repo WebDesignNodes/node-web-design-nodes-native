@@ -47,7 +47,7 @@ class Web_Presence {
     * @param password User Account Password in Plaintext
     */
 
-    private create_Email_Password_Account(email: string, password: string, account_custome_attributes?: unknown): Promise<{ account_ID: string }> {
+    private create_Email_Password_Account(email: string, password: string, account_custome_attributes?: unknown): Promise<{ created: boolean, account_ID: string | null, message: string }> {
 
         return new Promise((resolve, reject) => {
 
