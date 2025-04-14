@@ -72,6 +72,31 @@ class Web_Presence {
 
     }
 
+    private find_Database_Documents(database_name: string, filter: Record<string, any>): Promise<{ acknowledged: boolean }> {
+
+        return new Promise((resolve, reject) => {
+
+            this.API_Fetcher.Web_Presence.Database.find_Database_Documents({ database_name, filter }).then((fetch_response) => {
+
+                return resolve(fetch_response);
+
+            }).catch((err) => {
+
+                reject("An error has ocurred while trying to get the database content");
+                throw Error(`An error has ocurred while trying to get the database content: \n${err}`);
+
+            })
+
+        })
+
+    }
+
+    public Database = {
+
+        find: (database_name: string, filter: Record<string, any>) => this.find_Database_Documents(database_name, filter),
+
+    }
+
 }
 
 export default Web_Presence
