@@ -21,6 +21,7 @@ export interface logout_Payload {
 }
 
 export interface update_Account_Payload {
+    session_token: string;
     account_ID: string;
     updated_attributes: Record<string, any>;
 }
@@ -30,6 +31,7 @@ export interface reset_Email_Password_Account_Password_Payload {
 }
 
 export interface update_Email_Password_Account_Password_Payload {
+    session_token: string;
     account_ID: string;
     new_Password: string;
 }
@@ -40,5 +42,6 @@ export interface get_Account_Data_Payload {
 }
 
 export interface delete_Account_Payload {
+    session_token: string;
     account_ID: string;
 }
