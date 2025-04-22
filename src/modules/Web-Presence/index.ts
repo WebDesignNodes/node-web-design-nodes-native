@@ -85,7 +85,7 @@ class Web_Presence {
 
     }
 
-    private refresh_Email_Password_Session_Session_Token(session_token: string, refresh_token: string): Promise<{ new_Token: string }> {
+    private refresh_Email_Password_Session_Session_Token(session_token: string, refresh_token: string): Promise<{ new_Token: string, message: string }> {
 
         return new Promise((resolve, reject) => {
 
@@ -123,6 +123,25 @@ class Web_Presence {
 
     }
 
+    private update_Account(session_token: string, account_ID: string, updated_attributes: Record<string, any>): Promise<{ updated: boolean, message: string }> {
+
+        return new Promise((resolve, reject) => {
+
+            this.API_Fetcher.Web_Presence.User.update_Account({ session_token, account_ID, updated_attributes }).then((fetch_response) => {
+
+                return resolve(fetch_response);
+
+            }).catch((err) => {
+
+                reject("An error has ocurred while trying to update the account data");
+                throw Error(`An error has ocurred while trying to update the account data: \n${err}`);
+
+            })
+
+        })
+
+    }
+
     private reset_Email_Password_Account_Password(email: string): Promise<{ reset_email_sended: boolean }> {
 
         return new Promise((resolve, reject) => {
@@ -142,11 +161,11 @@ class Web_Presence {
 
     }
 
-    private update_Email_Password_Account_Password(account_ID: string, new_Password: string): Promise<{ updated: boolean, message: string }> {
+    private update_Email_Password_Account_Password(session_token: string, account_ID: string, new_Password: string): Promise<{ updated: boolean, message: string }> {
 
         return new Promise((resolve, reject) => {
 
-            this.API_Fetcher.Web_Presence.User.update_Email_Password_Account_Password({ account_ID: account_ID, new_Password: new_Password }).then((fetch_response) => {
+            this.API_Fetcher.Web_Presence.User.update_Email_Password_Account_Password({ session_token: session_token, account_ID: account_ID, new_Password: new_Password }).then((fetch_response) => {
 
                 return resolve(fetch_response);
 
@@ -180,11 +199,11 @@ class Web_Presence {
 
     }
 
-    public delete_Account(account_ID: string): Promise<{ deleted: boolean, message: string }> {
+    public delete_Account(session_token: string, account_ID: string): Promise<{ deleted: boolean, message: string }> {
 
         return new Promise((resolve, reject) => {
 
-            this.API_Fetcher.Web_Presence.User.detele_Account({ account_ID }).then((fetch_response) => {
+            this.API_Fetcher.Web_Presence.User.detele_Account({ session_token: session_token, account_ID: account_ID }).then((fetch_response) => {
 
                 return resolve(fetch_response);
 
@@ -205,11 +224,11 @@ class Web_Presence {
         login_Email_Password_Account: (email: string, password: string, keep_session_open: boolean) => this.login_Email_Password_Account(email, password, keep_session_open),
         refresh_Email_Password_Session_Session_Token: (session_token: string, refresh_token: string) => this.refresh_Email_Password_Session_Session_Token(session_token, refresh_token),
         logout: (session_token: string) => this.logout(session_token),
-        update_Account: (email: string, password: string, account_custome_attributes?: unknown) => this.create_Email_Password_Account(email, password, account_custome_attributes),
+        update_Account: (session_token: string, account_ID: string, updated_attributes: Record<string, any>) => this.update_Account(session_token, account_ID, updated_attributes),
         reset_Email_Password_Account_Password: (account_Email: string) => this.reset_Email_Password_Account_Password(account_Email),
-        update_Email_Password_Account_Password: (account_ID: string, new_Password: string) => this.update_Email_Password_Account_Password(account_ID, new_Password),
+        update_Email_Password_Account_Password: (session_token: string, account_ID: string, new_Password: string) => this.update_Email_Password_Account_Password(session_token, account_ID, new_Password),
         get_Account_Data: (account_ID: string, data: Record<string, number>) => this.get_Account_Data(account_ID, data),
-        delete_Account: (account_ID: string) => this.delete_Account(account_ID)
+        delete_Account: (session_token: string, account_ID: string) => this.delete_Account(session_token, account_ID)
 
     }
 
