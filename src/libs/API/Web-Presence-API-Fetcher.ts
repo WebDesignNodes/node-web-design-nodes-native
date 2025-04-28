@@ -7,12 +7,12 @@ import { Database_Routes } from "./routes/web-presence/database.routes";
 // * Payload Interfaces Required
 
 import * as Account_Payload from "./payload-interface/web-presence/user.payload";
-import { find_Database_Documents_Payload } from "./payload-interface/web-presence/database.payload";
+import * as Database_Payload from "./payload-interface/web-presence/database.payload";
 
 // * Response Interfaces Required
 
 import * as Account_Response from "./response-interface/web-presence/user.response";
-import { find_Database_Documents_Response } from "./response-interface/web-presence/database.response";
+import * as Database_Response from "./response-interface/web-presence/database.response";
 
 // * Class Exported
 
@@ -71,7 +71,14 @@ class Web_Presence_API_Fetcher {
         },
 
         Database: {
-            find_Database_Documents: (payload: find_Database_Documents_Payload): Promise<find_Database_Documents_Response> => this.send_Request(Database_Routes.find_Database_Documents, "POST", payload)
+            save_One_Document: (payload: Database_Payload.save_One_Document_Payload): Promise<Database_Response.save_One_Document_Response> => this.send_Request(Database_Routes.save_One_Document, "POST", payload),
+            save_Many_Document: (payload: Database_Payload.save_Many_Documents_Payload): Promise<Database_Response.save_Many_Documents_Response> => this.send_Request(Database_Routes.save_Many_Documents, "POST", payload),
+            find_One_Document: (payload: Database_Payload.find_One_Document_Payload): Promise<Database_Response.find_One_Documents_Response> => this.send_Request(Database_Routes.find_One_Documents, "POST", payload),
+            find_Many_Documents: (payload: Database_Payload.find_Many_Documents_Payload): Promise<Database_Response.find_Many_Documents_Response> => this.send_Request(Database_Routes.find_Many_Documents, "POST", payload),
+            update_One_Document: (payload: Database_Payload.update_One_Document_Payload): Promise<Database_Response.update_One_Document_Response> => this.send_Request(Database_Routes.update_One_Document, "POST", payload),
+            update_Many_Documents: (payload: Database_Payload.update_Many_Documents_Payload): Promise<Database_Response.update_Many_Documents_Response> => this.send_Request(Database_Routes.update_Many_Documents, "POST", payload),
+            delete_One_Document: (payload: Database_Payload.delete_One_Document_Payload): Promise<Database_Response.delete_One_Document_Response> => this.send_Request(Database_Routes.delete_One_Document, "POST", payload),
+            delete_Many_Documents: (payload: Database_Payload.delete_Many_Documents_Payload): Promise<Database_Response.delete_Many_Documents_Response> => this.send_Request(Database_Routes.delete_Many_Document, "POST", payload),
         }
 
     }

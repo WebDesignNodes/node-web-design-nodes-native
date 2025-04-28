@@ -1,6 +1,6 @@
 {
   "name": "web-design-nodes",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "NodeJS Package to connect to the web design nodes network services.",
   "keywords": [],
   "license": "ISC",
@@ -19,7 +19,8 @@
   ],
   "scripts": {
     "build": "tsup",
-    "test:user": "jest tests/User"
+    "test:user": "jest tests/User",
+    "test:db": "jest tests/Database"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
