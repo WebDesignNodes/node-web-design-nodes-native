@@ -55,6 +55,9 @@ describe("Web Presence Database Workflow", () => {
             title: 1
         }
 
+
+
+
         const search_Result = await web_Presence_Connection.Database.find_One_Document("testing", filter, projection);
 
         console.log(search_Result);
@@ -73,7 +76,11 @@ describe("Web Presence Database Workflow", () => {
             title: 1
         }
 
-        const search_Result = await web_Presence_Connection.Database.find_Many_Documents("testing", filter, projection);
+        const sort = {
+            releaseDate: -1
+        }
+
+        const search_Result = await web_Presence_Connection.Database.find_Many_Documents("testing", filter, projection, sort, 10);
 
         console.log(search_Result);
 

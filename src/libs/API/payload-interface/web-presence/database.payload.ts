@@ -19,6 +19,8 @@ export interface find_Many_Documents_Payload {
     database_name: string;
     filter: Record<string, any>;
     projection?: Record<string, number>;
+    sort?: Record<string, any>;
+    limit?: number,
 }
 
 export interface update_One_Document_Payload {

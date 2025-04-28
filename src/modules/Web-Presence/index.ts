@@ -351,11 +351,11 @@ class Web_Presence {
 
     }
 
-    private find_Many_Documents(database_name: string, filter: Record<string, any>, projection?: Record<string, number>): Promise<{ acknowledged: boolean, results: Record<string, any>[] }> {
+    private find_Many_Documents(database_name: string, filter: Record<string, any>, projection?: Record<string, number>, sort?: Record<string, any>, limit?: number): Promise<{ acknowledged: boolean, results: Record<string, any>[] }> {
 
         return new Promise((resolve, reject) => {
 
-            this.API_Fetcher.Web_Presence.Database.find_Many_Documents({ database_name, filter, projection }).then((fetch_response) => {
+            this.API_Fetcher.Web_Presence.Database.find_Many_Documents({ database_name, filter, projection, sort, limit }).then((fetch_response) => {
 
                 return resolve(fetch_response);
 
@@ -451,7 +451,7 @@ class Web_Presence {
         save_One_Document: (database_name: string, document: Record<string, any>) => this.save_One_Document(database_name, document),
         save_Many_Documents: (database_name: string, documents: Record<string, any>[]) => this.save_Many_Documents(database_name, documents),
         find_One_Document: (database_name: string, filter: Record<string, any>, projection?: Record<string, number>) => this.find_One_Document(database_name, filter, projection),
-        find_Many_Documents: (database_name: string, filter: Record<string, any>, projection?: Record<string, number>) => this.find_Many_Documents(database_name, filter, projection),
+        find_Many_Documents: (database_name: string, filter: Record<string, any>, projection?: Record<string, number>, sort?: Record<string, any>, limit?: number) => this.find_Many_Documents(database_name, filter, projection, sort, limit),
         update_One_Document: (database_name: string, filter: Record<string, any>, updates: Record<string, any>, upsert?: boolean) => this.update_One_Document(database_name, filter, updates, upsert),
         update_Many_Documents: (database_name: string, filter: Record<string, any>, updates: Record<string, any>, upsert: boolean) => this.update_Many_Documents(database_name, filter, updates, upsert),
         delete_One_Document: (database_name: string, filter: Record<string, any>) => this.delete_One_Document(database_name, filter),
