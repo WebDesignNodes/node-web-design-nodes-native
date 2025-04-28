@@ -66,6 +66,14 @@ class Web_Presence {
 
     }
 
+    /**
+     ** This Method will create and return the account session.
+     * @param email User Account Email
+     * @param password User Account Password
+     * @param keep_session_open Account Session Lifetime
+     * @returns session tokens
+     */
+
     private login_Email_Password_Account(email: string, password: string, keep_session_open: boolean): Promise<{ authenticated: boolean, message: string, session_token?: string, refresh_token?: string }> {
 
         return new Promise((resolve, reject) => {
@@ -84,6 +92,14 @@ class Web_Presence {
         })
 
     }
+
+    /**
+     ** This method will return the new session token 
+     ** for session that can renovate the session token.
+     * @param session_token Session Token
+     * @param refresh_token Sestion Refresh Token
+     * @returns newToken
+     */
 
     private refresh_Email_Password_Session_Session_Token(session_token: string, refresh_token: string): Promise<{ new_Token: string, message: string }> {
 
@@ -104,6 +120,12 @@ class Web_Presence {
 
     }
 
+    /**
+     ** This method will close the account session.
+     * @param session_token Session Token
+     * @returns session status
+     */
+
     private logout(session_token: string): Promise<{ closed: boolean, message: string }> {
 
         return new Promise((resolve, reject) => {
@@ -122,6 +144,14 @@ class Web_Presence {
         })
 
     }
+
+    /**
+     ** The method will update the account attributes at the Users Database
+     * @param session_token Session Token
+     * @param account_ID Account ID
+     * @param updated_attributes Account model new attributes value
+     * @returns Update state
+     */
 
     private update_Account(session_token: string, account_ID: string, updated_attributes: Record<string, any>): Promise<{ updated: boolean, message: string }> {
 
@@ -142,6 +172,13 @@ class Web_Presence {
 
     }
 
+    /**
+     ** This method will send a reset password througth an only
+     ** if newsletter module setup is complete. 
+     * @param email Account Email
+     * @returns reset_email_sended state
+     */
+
     private reset_Email_Password_Account_Password(email: string): Promise<{ reset_email_sended: boolean }> {
 
         return new Promise((resolve, reject) => {
@@ -160,6 +197,14 @@ class Web_Presence {
         })
 
     }
+
+    /**
+     ** This method will update the hash of the account.
+     * @param session_token Session Token
+     * @param account_ID Account ID
+     * @param new_Password Account new Password
+     * @returns Update status
+     */
 
     private update_Email_Password_Account_Password(session_token: string, account_ID: string, new_Password: string): Promise<{ updated: boolean, message: string }> {
 
@@ -180,6 +225,13 @@ class Web_Presence {
 
     }
 
+    /**
+     ** This method will return the data of the account requested
+     * @param account_ID Account ID
+     * @param data Data to retreive
+     * @returns account data requested
+     */
+
     public get_Account_Data(account_ID: string, data: Record<string, number>): Promise<{ found: boolean, data: Record<string, any>, message: string }> {
 
         return new Promise((resolve, reject) => {
@@ -198,6 +250,14 @@ class Web_Presence {
         })
 
     }
+
+    /**
+     ** This method will remove an account from the Web Presence
+     ** Users Database.
+     * @param session_token Session Token
+     * @param account_ID Account
+     * @returns Deletion state.
+     */
 
     public delete_Account(session_token: string, account_ID: string): Promise<{ deleted: boolean, message: string }> {
 
@@ -234,11 +294,49 @@ class Web_Presence {
 
     // * Web Presence Database Methods
 
-    private find_Database_Documents(database_name: string, filter: Record<string, any>): Promise<{ acknowledged: boolean }> {
+    private save_One_Document(database_name: string, document: Record<string, any>): Promise<{ acknowledged: boolean, _id: string }> {
 
         return new Promise((resolve, reject) => {
 
-            this.API_Fetcher.Web_Presence.Database.find_Database_Documents({ database_name, filter }).then((fetch_response) => {
+            this.API_Fetcher.Web_Presence.Database.save_One_Document({ database_name, document }).then((fetch_response) => {
+
+                return resolve(fetch_response);
+
+            }).catch((err) => {
+
+                reject("An error has ocurred while trying to save the document");
+                throw Error(`An error has ocurred while trying to save the document: \n${err}`);
+
+            })
+
+        })
+
+    }
+
+    private save_Many_Documents(database_name: string, documents: Record<string, any>[]): Promise<{ acknowledged: boolean }> {
+
+        return new Promise((resolve, reject) => {
+
+            this.API_Fetcher.Web_Presence.Database.save_Many_Document({ database_name, documents }).then((fetch_response) => {
+
+                return resolve(fetch_response);
+
+            }).catch((err) => {
+
+                reject("An error has ocurred while trying to save the documents");
+                throw Error(`An error has ocurred while trying to save the documents: \n${err}`);
+
+            })
+
+        })
+
+    }
+
+    private find_One_Document(database_name: string, filter: Record<string, any>, projection?: Record<string, number>): Promise<{ acknowledged: boolean, result: Record<string, any> }> {
+
+        return new Promise((resolve, reject) => {
+
+            this.API_Fetcher.Web_Presence.Database.find_One_Document({ database_name, filter, projection }).then((fetch_response) => {
 
                 return resolve(fetch_response);
 
@@ -253,10 +351,111 @@ class Web_Presence {
 
     }
 
+    private find_Many_Documents(database_name: string, filter: Record<string, any>, projection?: Record<string, number>): Promise<{ acknowledged: boolean, results: Record<string, any>[] }> {
+
+        return new Promise((resolve, reject) => {
+
+            this.API_Fetcher.Web_Presence.Database.find_Many_Documents({ database_name, filter, projection }).then((fetch_response) => {
+
+                return resolve(fetch_response);
+
+            }).catch((err) => {
+
+                reject("An error has ocurred while trying to get the database content");
+                throw Error(`An error has ocurred while trying to get the database content: \n${err}`);
+
+            })
+
+        })
+
+    }
+
+    private update_One_Document(database_name: string, filter: Record<string, any>, document_updates: Record<string, any>, upsert?: boolean): Promise<{ acknowledged: boolean, modifiedCount: number }> {
+
+        return new Promise((resolve, reject) => {
+
+            this.API_Fetcher.Web_Presence.Database.update_One_Document({ database_name, filter, document_updates, upsert }).then((fetch_response) => {
+
+                return resolve(fetch_response);
+
+            }).catch((err) => {
+
+                reject("An error has ocurred while trying to update the database document");
+                throw Error(`An error has ocurred while trying to update the database document: \n${err}`);
+
+            })
+
+        })
+
+    }
+
+    private update_Many_Documents(database_name: string, filter: Record<string, any>, document_updates: Record<string, any>, upsert: boolean): Promise<{ acknowledged: boolean, modifiedCount: number }> {
+
+        return new Promise((resolve, reject) => {
+
+            this.API_Fetcher.Web_Presence.Database.update_Many_Documents({ database_name, filter, document_updates, upsert }).then((fetch_response) => {
+
+                return resolve(fetch_response);
+
+            }).catch((err) => {
+
+                reject("An error has ocurred while trying to update the database documents");
+                throw Error(`An error has ocurred while trying to update the database documents \n${err}`);
+
+            })
+
+        })
+
+    }
+
+    private delete_One_Document(database_name: string, filter: Record<string, any>): Promise<{ acknowledged: boolean, deletedCount: number }> {
+
+        return new Promise((resolve, reject) => {
+
+            this.API_Fetcher.Web_Presence.Database.delete_One_Document({ database_name, filter }).then((fetch_response) => {
+
+                return resolve(fetch_response);
+
+            }).catch((err) => {
+
+                reject("An error has ocurred while trying to delete the document");
+                throw Error(`An error has ocurred while trying to delete the document: \n${err}`);
+
+            })
+
+        })
+
+    }
+
+    private delete_Many_Documents(database_name: string, filter: Record<string, any>): Promise<{ acknowledged: boolean, deletedCount: number }> {
+
+        return new Promise((resolve, reject) => {
+
+            this.API_Fetcher.Web_Presence.Database.delete_Many_Documents({ database_name, filter }).then((fetch_response) => {
+
+                return resolve(fetch_response);
+
+            }).catch((err) => {
+
+                reject("An error has ocurred while trying to delete the documents");
+                throw Error(`An error has ocurred while trying to delete the documents: \n${err}`);
+
+            })
+
+        })
+
+    }
+
     public Database = {
 
-        find: (database_name: string, filter: Record<string, any>) => this.find_Database_Documents(database_name, filter),
-
+        save_One_Document: (database_name: string, document: Record<string, any>) => this.save_One_Document(database_name, document),
+        save_Many_Documents: (database_name: string, documents: Record<string, any>[]) => this.save_Many_Documents(database_name, documents),
+        find_One_Document: (database_name: string, filter: Record<string, any>, projection?: Record<string, number>) => this.find_One_Document(database_name, filter, projection),
+        find_Many_Documents: (database_name: string, filter: Record<string, any>, projection?: Record<string, number>) => this.find_Many_Documents(database_name, filter, projection),
+        update_One_Document: (database_name: string, filter: Record<string, any>, updates: Record<string, any>, upsert?: boolean) => this.update_One_Document(database_name, filter, updates, upsert),
+        update_Many_Documents: (database_name: string, filter: Record<string, any>, updates: Record<string, any>, upsert: boolean) => this.update_Many_Documents(database_name, filter, updates, upsert),
+        delete_One_Document: (database_name: string, filter: Record<string, any>) => this.delete_One_Document(database_name, filter),
+        delete_Many_Documents: (database_name: string, filter: Record<string, any>) => this.delete_Many_Documents(database_name, filter)
     }
 
 }
