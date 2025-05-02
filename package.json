@@ -1,6 +1,6 @@
 {
   "name": "web-design-nodes",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "NodeJS Package to connect to the web design nodes network services.",
   "keywords": [],
   "license": "ISC",

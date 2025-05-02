@@ -27,14 +27,14 @@ export interface update_One_Document_Payload {
     database_name: string;
     filter: Record<string, any>;
     document_updates: Record<string, any>;
-    upsert?: boolean;
+    options?: Record<string, any>;
 }
 
 export interface update_Many_Documents_Payload {
     database_name: string;
     filter: Record<string, any>;
     document_updates: Record<string, any>;
-    upsert: boolean;
+    options?: Record<string, any>;
 }
 
 export interface delete_One_Document_Payload {
