@@ -43,9 +43,9 @@ class Web_Presence_API_Fetcher {
 
                     if (response.status === 400 && json_response.message === "session_token Expirated" && this.on_session_expirated !== undefined) {
 
-                        const new_Token = await this.on_session_expirated();
+                        const update_Result = await this.on_session_expirated();
 
-                        fetch(`${this.API_URL}${endpoint}`, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...payload as Object, project_id: this.project_id, project_token: this.project_token, session_token: new_Token }) }).then((response) => {
+                        fetch(`${this.API_URL}${endpoint}`, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...payload as Object, project_id: this.project_id, project_token: this.project_token, session_token: update_Result.new_Token }) }).then((response) => {
 
                             response.json().then((json_response) => {
 
