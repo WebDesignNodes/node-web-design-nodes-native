@@ -21,11 +21,13 @@ class Web_Presence_API_Fetcher {
     private API_URL = "https://api.webdesignnodes.com/v1/";
     private project_id: string;
     private project_token: string;
+    private on_session_expirated?: () => Promise<{ new_Token: string }>;
 
-    constructor(config: { project_id: string, project_token: string }) {
+    constructor(config: { project_id: string, project_token: string, on_session_expirated?: () => Promise<{ new_Token: string }> }) {
 
         this.project_id = config.project_id;
         this.project_token = config.project_token;
+        this.on_session_expirated = config.on_session_expirated;
 
     }
 
@@ -35,7 +37,34 @@ class Web_Presence_API_Fetcher {
 
             fetch(`${this.API_URL}${endpoint}`, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...payload as Object, project_id: this.project_id, project_token: this.project_token }) }).then((response) => {
 
-                response.json().then((json_response) => {
+                response.json().then(async (json_response) => {
+
+                    // * Refresh Session Token
+
+                    if (response.status === 400 && json_response.message === "session_token Expirated" && this.on_session_expirated !== undefined) {
+
+                        const new_Token = await this.on_session_expirated();
+
+                        fetch(`${this.API_URL}${endpoint}`, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...payload as Object, project_id: this.project_id, project_token: this.project_token, session_token: new_Token }) }).then((response) => {
+
+                            response.json().then((json_response) => {
+
+                                return resolve(json_response);
+
+                            }).catch((e) => {
+
+                                reject(`Unable to parse json response.\n${e}`);
+
+                            })
+
+
+                        }).catch((e) => {
+
+                            reject(`Web_Presence_API_Fetcher:send_Request: Error while fetching request.\n${e}`);
+
+                        })
+
+                    }
 
                     return resolve(json_response);
 
@@ -44,6 +73,7 @@ class Web_Presence_API_Fetcher {
                     reject(`Unable to parse json response.\n${e}`);
 
                 })
+
 
             }).catch((e) => {
 

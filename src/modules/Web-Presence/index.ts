@@ -32,7 +32,7 @@ class Web_Presence {
 
     private API_Fetcher: Web_Presence_API_Fetcher;
 
-    constructor(config: { project_id: string, project_token: string }) {
+    constructor(config: { project_id: string, project_token: string, on_session_refresh?: () => void }) {
 
         this.API_Fetcher = new Web_Presence_API_Fetcher(config);
 
