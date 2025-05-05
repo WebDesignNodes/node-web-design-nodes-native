@@ -9,7 +9,7 @@ class Web_Presence {
 
     // * This method will create the singletone class instance.
 
-    public static connect(config: { project_id: string, project_token: string }): Web_Presence {
+    public static connect(config: { project_id: string, project_token: string, on_session_expirated?: () => Promise<{ new_Token: string }> }): Web_Presence {
 
         if (!Web_Presence.instance) Web_Presence.instance = new Web_Presence(config);
 
@@ -32,7 +32,7 @@ class Web_Presence {
 
     private API_Fetcher: Web_Presence_API_Fetcher;
 
-    constructor(config: { project_id: string, project_token: string, on_session_refresh?: () => void }) {
+    constructor(config: { project_id: string, project_token: string, on_session_expirated?: () => Promise<{ new_Token: string }> }) {
 
         this.API_Fetcher = new Web_Presence_API_Fetcher(config);
 
