@@ -64,9 +64,12 @@ class Web_Presence_API_Fetcher {
 
                         })
 
+                    }else{
+
+                        return resolve(json_response);
+
                     }
 
-                    return resolve(json_response);
 
                 }).catch((e) => {
 
