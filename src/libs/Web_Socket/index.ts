@@ -19,6 +19,11 @@ class Web_Socket_Connection {
 
     constructor(config: { project_id: string }) {
 
+        console.log(config.project_id);
+        console.log(config.project_id);
+        console.log(config.project_id);
+        
+
         this.state = "connecting";
 
         this.ws_connection = new WebSocket("https://api.webdesignnodes.com/ws/", ["analytics", config.project_id]);
