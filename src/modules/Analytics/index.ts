@@ -21,8 +21,8 @@ class Analytics {
     constructor(config: { project_id: string, location: string, referrer: string }) {
 
         this.connection_data = { location: config.location, referrer: config.referrer };
-        this.Web_Socket_Connection = new Web_Socket_Connection({ project_id: config.project_id, on_connection_ready: this.save_Connection_Initial_Flow });
-
+        this.Web_Socket_Connection = new Web_Socket_Connection({ project_id: config.project_id });
+        this.save_Connection_Initial_Flow();
     }
 
     private save_Connection_Initial_Flow() {

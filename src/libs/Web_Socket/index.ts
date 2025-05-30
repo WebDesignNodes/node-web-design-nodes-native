@@ -17,7 +17,7 @@ class Web_Socket_Connection {
     private currentRequest: MessageRequest | null = null;
     private readyToSend: boolean = false;
 
-    constructor(config: { project_id: string, on_connection_ready: () => void }) {
+    constructor(config: { project_id: string }) {
 
         this.state = "connecting";
 
@@ -25,11 +25,10 @@ class Web_Socket_Connection {
 
         this.ws_connection.onopen = () => {
 
-            config.on_connection_ready();
+            this.state = "ready";
 
         };
 
-        // Evento: Recibir mensaje del servidor
         this.ws_connection.onmessage = (event) => {
 
             const connection_reply = JSON.parse(event.data) as { trigger: string, message: string }
@@ -88,14 +87,12 @@ class Web_Socket_Connection {
 
         };
 
-        // Evento: Error en la conexión
         this.ws_connection.onerror = (error) => {
 
             console.error("Error en la conexión WebSocket:", error);
 
         };
 
-        // Evento: Conexión cerrada
         this.ws_connection.onclose = () => {
 
             console.log("Conexión WebSocket cerrada");
