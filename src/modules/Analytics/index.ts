@@ -27,21 +27,9 @@ class Analytics {
 
     private save_Connection_Initial_Flow() {
 
-        console.log("Ready to send connection ianitial flow");
+        const on_response = (response: any) => {}
 
-        const on_response = (response: any) => {
-
-            console.log("connection initial flow: response");
-            console.log(response);
-
-        }
-
-        const on_reject = (err: any) => {
-
-            console.log("connection initial flow: err");
-            console.log(err);
-
-        }
+        const on_reject = (err: any) => {}
 
         this.Web_Socket_Connection.send_Message("new-connection", { location: this.connection_data.location, referrer: this.connection_data.referrer }, on_response, on_reject);
 
@@ -50,16 +38,9 @@ class Analytics {
 
     public update_Connection_Flow(location: string) {
 
-        console.log("Sending connection flow");
+        const on_response = (response: any) => {}
 
-        const on_response = (response: any) => {
-
-        }
-
-        const on_reject = (err: any) => {
-
-
-        }
+        const on_reject = (err: any) => {}
 
         this.Web_Socket_Connection.send_Message("navegation-update", { location: location }, on_response, on_reject);
 
