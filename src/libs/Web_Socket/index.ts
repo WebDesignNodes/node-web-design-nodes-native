@@ -16,9 +16,9 @@ class Web_Socket_Connection {
     private currentRequest: MessageRequest | null = null;
     private readyToSend: boolean = false;
 
-    constructor(config: { project_id: string }) {
+    constructor(sec_websocket_protocol: string[]) {
 
-        this.ws_connection = new WebSocket("https://api.webdesignnodes.com/ws/", ["analytics", config.project_id]);
+        this.ws_connection = new WebSocket("https://api.webdesignnodes.com/ws/", sec_websocket_protocol);
 
         this.ws_connection.onmessage = (event) => {
 

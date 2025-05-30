@@ -21,15 +21,15 @@ class Analytics {
     constructor(config: { project_id: string, location: string, referrer: string }) {
 
         this.connection_data = { location: config.location, referrer: config.referrer };
-        this.Web_Socket_Connection = new Web_Socket_Connection({ project_id: config.project_id });
+        this.Web_Socket_Connection = new Web_Socket_Connection(["analytics", config.project_id]);
         this.save_Connection_Initial_Flow();
     }
 
     private save_Connection_Initial_Flow() {
 
-        const on_response = (response: any) => {}
+        const on_response = (response: any) => { }
 
-        const on_reject = (err: any) => {}
+        const on_reject = (err: any) => { }
 
         this.Web_Socket_Connection.send_Message("new-connection", { location: this.connection_data.location, referrer: this.connection_data.referrer }, on_response, on_reject);
 
@@ -38,9 +38,9 @@ class Analytics {
 
     public update_Connection_Flow(location: string) {
 
-        const on_response = (response: any) => {}
+        const on_response = (response: any) => { }
 
-        const on_reject = (err: any) => {}
+        const on_reject = (err: any) => { }
 
         this.Web_Socket_Connection.send_Message("navegation-update", { location: location }, on_response, on_reject);
 
