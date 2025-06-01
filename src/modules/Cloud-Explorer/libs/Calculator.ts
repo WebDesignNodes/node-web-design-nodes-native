@@ -1,7 +1,7 @@
 
 // * Dependencies Required
 
-import { algo, lib } from 'crypto-js';
+import { algo, lib, enc } from 'crypto-js';
 
 export const get_File_Hash = (file: File): Promise<{ file_hash: string }> => {
     
@@ -39,7 +39,7 @@ export const get_File_Hash = (file: File): Promise<{ file_hash: string }> => {
 
                 } else {
 
-                    const hash = sha256.finalize().toString(CryptoJS.enc.Hex);
+                    const hash = sha256.finalize().toString(enc.Hex);
                     resolve({ file_hash: hash });
                 }
 
