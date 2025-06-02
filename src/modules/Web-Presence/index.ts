@@ -287,7 +287,7 @@ class Web_Presence {
         update_Account: (session_token: string, account_ID: string, updated_attributes: Record<string, any>) => this.update_Account(session_token, account_ID, updated_attributes),
         reset_Email_Password_Account_Password: (account_Email: string) => this.reset_Email_Password_Account_Password(account_Email),
         update_Email_Password_Account_Password: (session_token: string, account_ID: string, new_Password: string) => this.update_Email_Password_Account_Password(session_token, account_ID, new_Password),
-        get_Account_Data: (account_ID: string, data: Record<string, number>) => this.get_Account_Data(account_ID, data),
+        get_Account_Data: (account_ID: string, data: Record<string, any>) => this.get_Account_Data(account_ID, data),
         delete_Account: (session_token: string, account_ID: string) => this.delete_Account(session_token, account_ID)
 
     }
@@ -450,7 +450,7 @@ class Web_Presence {
 
         save_One_Document: (database_name: string, document: Record<string, any>) => this.save_One_Document(database_name, document),
         save_Many_Documents: (database_name: string, documents: Record<string, any>[]) => this.save_Many_Documents(database_name, documents),
-        find_One_Document: (database_name: string, filter: Record<string, any>, projection?: Record<string, number>) => this.find_One_Document(database_name, filter, projection),
+        find_One_Document: (database_name: string, filter: Record<string, any>, projection?: Record<string, any>) => this.find_One_Document(database_name, filter, projection),
         find_Many_Documents: (database_name: string, filter: Record<string, any>, projection?: Record<string, number>, sort?: Record<string, any>, limit?: number) => this.find_Many_Documents(database_name, filter, projection, sort, limit),
         update_One_Document: (database_name: string, filter: Record<string, any>, updates: Record<string, any>, options?: Record<string, any>) => this.update_One_Document(database_name, filter, updates, options),
         update_Many_Documents: (database_name: string, filter: Record<string, any>, updates: Record<string, any>, options?: Record<string, any>) => this.update_Many_Documents(database_name, filter, updates, options),
