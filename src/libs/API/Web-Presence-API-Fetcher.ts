@@ -23,7 +23,9 @@ class Web_Presence_API_Fetcher {
     private project_token: string;
     private on_session_expirated?: () => Promise<{ new_Token: string }>;
 
-    constructor(config: { project_id: string, project_token: string, on_session_expirated?: () => Promise<{ new_Token: string }> }) {
+    constructor(config: { project_id: string, project_token: string, on_session_expirated?: () => Promise<{ new_Token: string }>, dev_url?: string }) {
+
+        if (config.dev_url) this.API_URL = config.dev_url;
 
         this.project_id = config.project_id;
         this.project_token = config.project_token;
@@ -64,7 +66,7 @@ class Web_Presence_API_Fetcher {
 
                         })
 
-                    }else{
+                    } else {
 
                         return resolve(json_response);
 
